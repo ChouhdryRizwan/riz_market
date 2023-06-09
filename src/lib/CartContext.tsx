@@ -18,6 +18,7 @@ type CartState = {
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
   clearCart: () => void;
+  ReducefromCart: (product: Product) => void;
 };
 
 const CartContext = createContext<CartState>({
@@ -25,6 +26,7 @@ const CartContext = createContext<CartState>({
   addToCart: () => { },
   removeFromCart: () => { },
   clearCart: () => { },
+  ReducefromCart: () => { },
 });
 
 export const useCart = () => useContext(CartContext);
@@ -36,20 +38,43 @@ export const CartProvider: React.FC = ({ children }: ChildrenType): ReactElement
 
   const addToCart = (product: Product) => {
     setCartItems((prevCartItems) => {
-      return [...prevCartItems,{product}];
-      // const existingCartItemIndex = prevCartItems.findIndex((item) => item.product.id === product.id);
-      // if (existingCartItemIndex !== -1) {
-      //   const updatedCartItems = [...prevCartItems];
-      //   updatedCartItems[existingCartItemIndex].quantity += 1;
-      //   return updatedCartItems;
-      // } else {
-      //   return [...prevCartItems, { product, quantity: 1 }];
-      // }
+      const existingCartItemIndex = prevCartItems.findIndex((item) => item.product._id === product._id);
+      if (existingCartItemIndex !== -1) {
+        const updatedCartItems = [...prevCartItems];
+        updatedCartItems[existingCartItemIndex] = {
+          ...updatedCartItems[existingCartItemIndex],
+          quantity: updatedCartItems[existingCartItemIndex].quantity + 1
+        };
+        return updatedCartItems;
+      } else {
+        return [...prevCartItems, { product, quantity: 1 }];
+      }
     });
   };
 
+  const ReducefromCart = (product: Product) => {
+    setCartItems((prevCartItems) => {
+      const existingCartItemIndex = prevCartItems.findIndex((item) => item.product._id === product._id);
+      if (existingCartItemIndex !== -1) {
+        const updatedCartItems = [...prevCartItems];
+        const updatedQuantity = updatedCartItems[existingCartItemIndex].quantity - 1;
+        if (updatedQuantity > 0) {
+          updatedCartItems[existingCartItemIndex] = {
+            ...updatedCartItems[existingCartItemIndex],
+            quantity: updatedQuantity
+          };
+        } else {
+          updatedCartItems.splice(existingCartItemIndex, 1); // Remove the item from the array
+        }
+        return updatedCartItems;
+      }
+      return prevCartItems;
+    });
+  };
+
+
   const removeFromCart = (productId: string) => {
-    setCartItems((prevCartItems) => prevCartItems.filter((item) => item.product.id !== productId));
+    setCartItems((prevCartItems) => prevCartItems.filter((item) => item.product._id !== productId));
   };
 
   const clearCart = () => {
@@ -61,6 +86,7 @@ export const CartProvider: React.FC = ({ children }: ChildrenType): ReactElement
     addToCart,
     removeFromCart,
     clearCart,
+    ReducefromCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

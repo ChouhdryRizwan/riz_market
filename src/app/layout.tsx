@@ -2,10 +2,11 @@ import { Toaster } from "react-hot-toast";
 import Navbar from "../../components/section/Navbar";
 import "./globals.css";
 import { CartProvider } from "@/lib/CartContext";
+import Footer from "../../components/section/Footer";
 
 
 export const metadata = {
-  title: "Rizwan Mobiles",
+  title: "Hua-X-Sam",
   description: "Live for People",
 };
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </CartProvider>
+        <Footer/>
       </body>
     </html>
   );

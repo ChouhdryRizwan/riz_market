@@ -1,4 +1,5 @@
 'use client';
+import { toast } from "react-hot-toast";
 import { Button } from "./button"
 import { useCart } from '@/lib/CartContext';
 
@@ -8,11 +9,10 @@ export default function AddtoCart({ product }: any) {
     const { addToCart,clearCart } = useCart();
 
     const handleAddToCart = (e: any) => {
-        console.log("haa");
-        // e.stopPropagation();
-        // e.preventDefault();
+        console.log("Rizwan");
+        e.stopPropagation();
         addToCart(product);
-        // clearCart();
+        toast.success("Item added to the cart.");
     }
     return (
         <div className="mt-4">

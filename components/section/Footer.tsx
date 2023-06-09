@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 export default function Footer() {
     return (
@@ -5,8 +6,10 @@ export default function Footer() {
             <div className="mt-14 border-t-[1px] border-gray-800 py-10">
                 <div className="flex gap-7">
                     <div className="w-[40%]">
-                        <div>Logo</div>
-                        <div className="py-7">Small, artisan label that offers a thoughtfully <br /> curated collection of high quality everyday <br />  essentials made.</div>
+                        <div className="justify-center items-center">
+                            <Image className="h-[30%]" src={"/HuaXsam.png"} alt="Website Logo" width={200} height={200} />
+                        </div>
+                        <div className="py-2">We are a leading online retailer dedicated to providing the latest Huawei and Samsung mobile phones at competitive prices. Our goal is to offer a seamless shopping experience and exceptional customer service.</div>
                         <div className="flex">
                             <div>.</div>
                             <div>.</div>
@@ -38,6 +41,9 @@ export default function Footer() {
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div className="border-t-[1px] border-gray-800 flex justify-center py-2">
+                <a href="https://github.com/ChouhdryRizwan"><span className="text-md font-bold text-gray-600">Code By : </span>  <span className="text-md font-bold text-gray-900">Chouhdry Rizwan</span></a>
             </div>
         </>
     );

@@ -27,12 +27,12 @@ export default async function Products() {
             </div>
             <div className="grid grid-cols-0 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-5">
                 {products.map((data) => (
-                    <Link href={`/products/${data._id}`} className="group">
+                    <Link key={data._id} href={`/products/${data._id}`} className="group">
                         <div key={data.product_name} className="">
                             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-xl bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                                 <Image width={200} height={300} src={urlForImage(data.prod_image).url()} alt={"Product Image"} className=" max-h-[250px] h-full w-full object-contain object-center group-hover:opacity-75" />
                             </div>
-                            <span className='inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500/10 mt-1'>{data.cat_name}</span>
+                           
                             <h3 className="mt-2 text-md text-gray-700">{data.product_name}</h3>
                             <p className="text-lg font-medium text-gray-900">Rs. {data.prod_price}</p>
                         </div>
