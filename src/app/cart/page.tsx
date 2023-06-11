@@ -81,14 +81,16 @@ export default function CartPage() {
                 </div>
                 {cartItems.length >= 1 && (
                     <div className='h-[200px] w-[25%] rounded-2xl space-y-5'>
-                        <div><span className='text-xl font-bold'>Order Summary</span></div>
-                        <div className='flex justify-between'><span className='text-lg'>Quantity</span><span className='font-semibold'>{cartItems.length} Product</span></div>
-                        <div className='flex justify-between'><span className='text-lg'>Sub Total</span><span className='font-semibold'>{prodTotalPrice()}</span></div>
-                        <div className=''>
-                            <button type="button" className="bg-white hover:bg-gray-800 hover:text-gray-100 text-gray-800 font-semibold py-2 px-5 border border-gray-400 rounded-lg shadow flex gap-2">
-                                Proceed to Checkout
-                            </button>
-                        </div>
+                        <form action="/api/order" method='POST'>
+                            <div><span className='text-xl font-bold'>Order Summary</span></div>
+                            <div className='flex justify-between'><span className='text-lg'>Quantity</span><span className='font-semibold'>{cartItems.length} Product</span></div>
+                            <div className='flex justify-between'><span className='text-lg'>Sub Total</span><span className='font-semibold'>{prodTotalPrice()}</span></div>
+                            <div>
+                                <button type="submit" className="bg-white hover:bg-gray-800 hover:text-gray-100 text-gray-800 font-semibold py-2 px-5 border border-gray-400 rounded-lg shadow flex gap-2">
+                                    Proceed to Checkout
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 )}
             </div>

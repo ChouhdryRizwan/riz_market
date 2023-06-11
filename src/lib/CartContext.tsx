@@ -1,11 +1,21 @@
 'use client';
-import { ReactElement, createContext, useContext, useState } from 'react';
+import { ReactElement, ReactNode, createContext, useContext, useState } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
 type Product = {
-  id: string;
+  prod_price: number;
+  _id: string;
+  cat_name: string;
+  product_name: string;
   name: string;
   price: number;
+  prod_image: {
+    _key: string;
+    asset: {
+      _ref: string;
+      _type: string;
+    }
+  }
 };
 
 type CartItem = {
@@ -30,8 +40,8 @@ const CartContext = createContext<CartState>({
 });
 
 export const useCart = () => useContext(CartContext);
-type ChildrenType = { children?: ReactElement | ReactElement[] }
-export const CartProvider: React.FC = ({ children }: ChildrenType): ReactElement => {
+type ChildrenType = { children: ReactElement | ReactElement[] | ReactNode | ReactNode[] }
+export const CartProvider = ({ children }: ChildrenType): ReactElement => {
   const [cartItems, setCartItems] = useLocalStorageState<CartItem[]>('cart', {
     defaultValue: []
   });
