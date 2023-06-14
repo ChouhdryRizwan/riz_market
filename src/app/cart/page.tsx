@@ -3,15 +3,17 @@ import { PaperClipIcon } from '@heroicons/react/20/solid'
 import Image from "next/image";
 import Quantity from '../../../components/ui/quantity';
 import { useCart } from '@/lib/CartContext';
+import type { CartItem as TCartItem } from '@/lib/CartContext';
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineShopping } from 'react-icons/ai';
 import { HiOutlineTrash } from 'react-icons/hi';
 import { urlForImage } from '../../../sanity/lib/image';
 import { Item } from '@radix-ui/react-menubar';
 import { loadStripe } from "@stripe/stripe-js";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
 const stripePromise = loadStripe(publishableKey);
-
 
 
 export default function CartPage() {
@@ -88,14 +90,14 @@ export default function CartPage() {
                 {cartItems.length >= 1 && (
                     <div className='h-[200px] w-[25%] rounded-2xl space-y-5'>
                         {/* <form action="/api/order" method='POST'> */}
-                            <div><span className='text-xl font-bold'>Order Summary</span></div>
-                            <div className='flex justify-between'><span className='text-lg'>Quantity</span><span className='font-semibold'>{cartItems.length} Product</span></div>
-                            <div className='flex justify-between'><span className='text-lg'>Sub Total</span><span className='font-semibold'>{prodTotalPrice()}</span></div>
-                            <div>
-                                <button onClick={createCheckOutSession} type="submit" className="bg-white hover:bg-gray-800 hover:text-gray-100 text-gray-800 font-semibold py-2 px-5 border border-gray-400 rounded-lg shadow flex gap-2">
-                                    Proceed to Checkout
-                                </button>
-                            </div>
+                        <div><span className='text-xl font-bold'>Order Summary</span></div>
+                        <div className='flex justify-between'><span className='text-lg'>Quantity</span><span className='font-semibold'>{cartItems.length} Product</span></div>
+                        <div className='flex justify-between'><span className='text-lg'>Sub Total</span><span className='font-semibold'>{prodTotalPrice()}</span></div>
+                        <div>
+                            <button onClick={() => { createCheckOutSession(cartItems) }} type="submit" className="bg-white hover:bg-gray-800 hover:text-gray-100 text-gray-800 font-semibold py-2 px-5 border border-gray-400 rounded-lg shadow flex gap-2">
+                                Proceed to Checkout
+                            </button>
+                        </div>
                         {/* </form> */}
                     </div>
                 )}
@@ -104,28 +106,32 @@ export default function CartPage() {
     );
 }
 
-const createCheckOutSession = async () => {
-console.log("aaya");
-    const stripe = await stripePromise;
-
-    const checkoutSession = await fetch(
-        "https://localhost:3000/api/create-stripe-session",
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                item: "cartItems.product",
-            }),
-        }
-    );
-
-    const sessionID = await checkoutSession.json();
-    const result = await stripe?.redirectToCheckout({
-        sessionId: sessionID,
-    });
-    if (result?.error) {
-        alert(result.error.message);
+const createCheckOutSession = async (item: TCartItem[]) => {
+    try {
+        await axios.post("https://localhost:3000/api/create-stripe-session", { item })
+        // console.log(item);
+        // const stripe = await stripePromise;
+        // await fetch(
+        // "https://riz-market-place-chouhdryrizwan.vercel.app/api/create-stripe-session",
+        // "http://localhost:3000/api/create-stripe-session",
+        // {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         item: item,
+        //     }),
+        // }
+        // );
+    } catch (error) {
+        console.log(error);
     }
+
+    // const sessionID = await checkoutSession.json();
+    // const result = await stripe?.redirectToCheckout({
+    //     sessionId: sessionID,
+    // });
+    // if (result?.error) {
+    //     alert(result.error.message);
 };
