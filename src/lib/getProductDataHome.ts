@@ -2,7 +2,7 @@ import { client } from "@/lib/sanityclient";
 
 export const getProductDataHome = async () => {
   let query;
-    query = `*[_type == "product"][0..3]{
+    query = `*[_type == "product"]{
     _id,
     product_name,
     prod_desc,

@@ -4,18 +4,28 @@ import { useCart } from "@/lib/CartContext";
 
 export async function POST(request: NextRequest) {
   const { cartItems } = useCart();
-  return new NextResponse("An error occurred while saving the data.");
+  // const cartItems = getCartItems();
 
+  // Extract the relevant data from the cartItems
+  const orderData = cartItems.map((item) => ({
+    prod_id: item.product._id,
+    prod_quantity: item.quantity,
+    price: item.product.prod_price, 
+  }));
 
-  //     const res = await db.insert(OrderTable).values({
-  //       prod_id: product._id,
-  //       prod_quantity: quantity,
-  //       price: product.price,
-  //     });
-  //     return NextResponse.json({ res });
-  //   }
-  // } catch (error) {
-  //   console.error("Error saving data to the database:", error);
-  //   return new NextResponse("An error occurred while saving the data.");
-  // }
+  try {
+    await db.transaction(async () => {
+      for (const orderItem of orderData) {
+        await db.insert(OrderTable).values(orderItem);
+      }
+    });
+
+    return new NextResponse("Data saved successfully.", { status: 200 });
+    return new NextResponse("Data saved successfully.");
+  } catch (error) {
+    console.error(error);
+    return new NextResponse("An error occurred while saving the data.", {
+      status: 500,
+    });
+  }
 }

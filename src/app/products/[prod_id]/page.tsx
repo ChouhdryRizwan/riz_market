@@ -42,8 +42,9 @@ export default async function Product({ params }: {
         { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
     ]);
     const [selectedColor, setSelectedColor] = useState(colors[0].name);
-
+    console.log("products id" + params.prod_id);
     const products: Iprod[] = await getProductData(params.prod_id as string);
+    console.log("products" + products);
 
     return (
         <>

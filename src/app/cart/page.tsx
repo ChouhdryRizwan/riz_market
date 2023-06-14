@@ -7,6 +7,12 @@ import { AiOutlineMinus, AiOutlinePlus, AiOutlineShopping } from 'react-icons/ai
 import { HiOutlineTrash } from 'react-icons/hi';
 import { urlForImage } from '../../../sanity/lib/image';
 import { Item } from '@radix-ui/react-menubar';
+import { loadStripe } from "@stripe/stripe-js";
+
+const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
+const stripePromise = loadStripe(publishableKey);
+
+
 
 export default function CartPage() {
     const { cartItems, removeFromCart, addToCart, ReducefromCart } = useCart();
@@ -81,19 +87,45 @@ export default function CartPage() {
                 </div>
                 {cartItems.length >= 1 && (
                     <div className='h-[200px] w-[25%] rounded-2xl space-y-5'>
-                        <form action="/api/order" method='POST'>
+                        {/* <form action="/api/order" method='POST'> */}
                             <div><span className='text-xl font-bold'>Order Summary</span></div>
                             <div className='flex justify-between'><span className='text-lg'>Quantity</span><span className='font-semibold'>{cartItems.length} Product</span></div>
                             <div className='flex justify-between'><span className='text-lg'>Sub Total</span><span className='font-semibold'>{prodTotalPrice()}</span></div>
                             <div>
-                                <button type="submit" className="bg-white hover:bg-gray-800 hover:text-gray-100 text-gray-800 font-semibold py-2 px-5 border border-gray-400 rounded-lg shadow flex gap-2">
+                                <button onClick={createCheckOutSession} type="submit" className="bg-white hover:bg-gray-800 hover:text-gray-100 text-gray-800 font-semibold py-2 px-5 border border-gray-400 rounded-lg shadow flex gap-2">
                                     Proceed to Checkout
                                 </button>
                             </div>
-                        </form>
+                        {/* </form> */}
                     </div>
                 )}
             </div>
         </>
     );
 }
+
+const createCheckOutSession = async () => {
+console.log("aaya");
+    const stripe = await stripePromise;
+
+    const checkoutSession = await fetch(
+        "https://localhost:3000/api/create-stripe-session",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                item: "cartItems.product",
+            }),
+        }
+    );
+
+    const sessionID = await checkoutSession.json();
+    const result = await stripe?.redirectToCheckout({
+        sessionId: sessionID,
+    });
+    if (result?.error) {
+        alert(result.error.message);
+    }
+};

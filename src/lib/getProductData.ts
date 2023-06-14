@@ -24,6 +24,7 @@ export const getProductData = async (_id?: string) => {
         prod_image
       }`;
   }
+  
   const res = await client.fetch(query);
   return res;
 };
