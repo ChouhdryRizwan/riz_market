@@ -10,7 +10,7 @@ import { urlForImage } from '../../../sanity/lib/image';
 import { Item } from '@radix-ui/react-menubar';
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import getStipePromise from '@/lib/stripe';
 
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
 const stripePromise = loadStripe(publishableKey);
@@ -106,32 +106,17 @@ export default function CartPage() {
     );
 }
 
-const createCheckOutSession = async (item: TCartItem[]) => {
-    try {
-        await axios.post("https://localhost:3000/api/create-stripe-session", { item })
-        // console.log(item);
-        // const stripe = await stripePromise;
-        // await fetch(
-        // "https://riz-market-place-chouhdryrizwan.vercel.app/api/create-stripe-session",
-        // "http://localhost:3000/api/create-stripe-session",
-        // {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         item: item,
-        //     }),
-        // }
-        // );
-    } catch (error) {
-        console.log(error);
+const createCheckOutSession = async (items: TCartItem[]) => {
+    const stripe = await getStipePromise();
+    const response = await fetch("/api/create-stripe-session/", {
+    // const response = await fetch("/api/order/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-cache",
+        body: JSON.stringify(items),
+    });
+    const data = await response.json();
+    if (data.session) {
+        stripe?.redirectToCheckout({ sessionId: data.session.id });
     }
-
-    // const sessionID = await checkoutSession.json();
-    // const result = await stripe?.redirectToCheckout({
-    //     sessionId: sessionID,
-    // });
-    // if (result?.error) {
-    //     alert(result.error.message);
 };

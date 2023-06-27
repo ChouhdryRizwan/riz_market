@@ -39,24 +39,19 @@ export default async function Category({ params }: {
     return (
         <>
             <div className='relative'>
-                <span className='text-7xl font-bold opacity-10 text-gray-400 tracking-wide'>Devices</span>
-                <span className='text-3xl font-bold absolute left-0 top-5'>{params.category}</span>
-                <hr className='text-gray-500 mt-5' />
+                <span className='xl:text-7xl lg:text-7xl text-4xl font-bold opacity-10 text-gray-400 tracking-wide'>Devices</span>
+                <span className='xl:text-3xl lg:text-3xl text-md font-bold absolute left-0 top-2 lg:top-5 xl:top-5'>{params.category}</span>
+                <hr className='text-gray-500 lg:mt-5 xl:mt-5 mt-2' />
             </div>
-            <div className="grid grid-cols-0 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-5">
+            <div className="grid grid-cols-0 gap-x-6 gap-y-10 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-5 px-1 lg:px-0 xl:px-0">
                 {products.map((data) => (
                     <Link key={data._id} href={`/products/${data._id}`} className="group">
                         <div key={data.product_name} className="">
                             <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-xl bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                                <Image width={200} height={300} src={urlForImage(data.prod_image).url()} alt={"Product Image"} className=" max-h-[250px] h-full w-full object-contain object-center group-hover:opacity-75" />
+                                <Image width={200} height={300} src={urlForImage(data.prod_image).url()} alt={"Product Image"} className="max-h-[250px] lg:h-full xl:h-full h-28 w-full object-contain object-center group-hover:opacity-75" />
                             </div>
-                            <h3 className="mt-4 text-sm text-gray-700">{data.product_name}</h3>
-                            {/* <h4>{data._id}</h4> */}
-                            {/* <h4>{data.prod_desc}</h4> */}
-                            <p className="mt-1 text-lg font-medium text-gray-900">Rs. {data.prod_price}</p>
-                            {/* <button>Add to Cart</button> */}
-                            {/* <h4>{data.cat_name}</h4> */}
-                            {/* <img src={urlFor(data.prod_image).width(200).url()} alt="Product Image" /> */}
+                            <h3 className="mt-4 text-xs lg:text-md xl:text-md text-gray-700">{data.product_name}</h3>
+                            <p className=" mt-1 text-sm ld:text-lg xl:text-lg font-medium text-gray-900">Rs. {data.prod_price}</p>
                         </div>
                     </Link>
                 ))

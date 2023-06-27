@@ -22,9 +22,9 @@ export default async function Products() {
     return (
         <>
             <div className='relative'>
-                <span className='text-7xl font-bold opacity-10 text-gray-400 tracking-wide'>Brands</span>
-                <span className='text-3xl font-bold absolute left-0 top-5'>All</span>
-                <hr className='text-gray-500 mt-5' />
+                <span className='xl:text-7xl lg:text-7xl text-4xl font-bold opacity-10 text-gray-400 tracking-wide'>Brands</span>
+                <span className='xl:text-3xl lg:text-3xl text-md font-bold absolute left-0  top-2 lg:top-5 xl:top-5'>All</span>
+                <hr className='text-gray-500 lg:mt-5 xl:mt-5 mt-2' />
             </div>
             <div className="grid grid-cols-0 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mt-5">
                 {products.map((data) => (

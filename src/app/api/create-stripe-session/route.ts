@@ -1,53 +1,48 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { urlForImage } from "../../../../sanity/lib/image";
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+const key = process.env.STRIPE_SECRET_KEY || "";
+
+const stripe = new Stripe(key, {
+  apiVersion: "2022-11-15",
+});
+
+export async function POST(request: NextRequest) {
+  const body = await request.json();
   try {
-    // const { data } = req.body; // Assuming the request body contains the 'data' property
-
-    // Process the data or perform any necessary operations
-    // ...
-
-    // Send a response
-    res.status(200).json({ message: "Data received successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    if (body.length > 0) {
+      const session = await stripe.checkout.sessions.create({
+        submit_type: "pay",
+        mode: "payment",
+        payment_method_types: ["card"],
+        billing_address_collection: "auto",
+        invoice_creation: {
+          enabled: true,
+        },
+        line_items: body.map((item: any) => {
+          return {
+            price_data: {
+              currency: "pkr",
+              product_data: {
+                name: item.product.product_name,
+                description: item.product.prod_desc,
+                images: [urlForImage(item.product.prod_image).url()],
+              },
+              unit_amount: item.product.prod_price * 100,
+            },
+            quantity: item.quantity,
+          };
+        }),
+        success_url: `${request.headers.get("origin")}/success`,
+        cancel_url: `${request.headers.get("origin")}/?canceled=true`,
+      });
+      return NextResponse.json({ session });
+    } else {
+      return NextResponse.json({ message: "No Data Found" });
+    }
+  } catch (err: any) {
+    console.log(err);
+    return NextResponse.json(err.message);
   }
-  // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  //   apiVersion: "2022-11-15",
-  // });
-
-  // const transformedItem = {
-  //   price_data: {
-  //     currency: "pkr",
-  //     product_data: {
-  //       name: "cartItems.name",
-  //       description: "item.description",
-  //       images: ["item.image"],
-  //       metadata: { name: "some additional info", task: "Usm created a task" },
-  //     },
-  //     unit_amount: 50 * 100,
-  //     //  unit_amount: item.price * 100,
-  //   },
-  //   quantity: 3,
-  //   //    quantity: item.quantity,
-  // };
-
-  // const redirectURL =
-  //   process.env.NODE_ENV === "development"
-  //     ? "http://localhost:3000"
-  //     : "https://riz-market-place-chouhdryrizwan.vercel.app";
-
-  // const session = await stripe.checkout.sessions.create({
-  //   payment_method_types: ["card"],
-  //   line_items: [transformedItem],
-  //   mode: "payment",
-  //   success_url: redirectURL + "/payment/success",
-  //   cancel_url: redirectURL + "/payment/fail",
-  //   metadata: {
-  //     images: "item.image",
-  //   },
-  // });
-  // return NextResponse.json(session?.id);
 }

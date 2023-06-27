@@ -48,8 +48,7 @@ export default async function Product({ params }: {
         <>
             <div className="grid w-full grid-cols-1 items-center gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8 mt-6">
                 <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                    <img src={urlForImage(products[0].prod_image).url()} alt="detail product image" className=" max-h-[500px] mx-auto h-96 object-cover object-center" />
-                    {/* <Slider img={products[0].prod_image_gallery}/>  */}
+                    <img src={urlForImage(products[0].prod_image).url()} alt="detail product image" className=" max-h-[500px] mx-auto h-auto lg:h-96 xl:h-96 object-cover object-center" />
                 </div>
                 <div className="sm:col-span-8 lg:col-span-7">
                     <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">{products[0].product_name}</h2>
@@ -127,9 +126,9 @@ export default async function Product({ params }: {
             </div>
             <div className='mt-10 mb-10'>
                 <Heading overlay="Overview" head="Product Information" />
-                <div className='flex flex-row py-5'>
-                    <div className='w-[20%] text-lg font-bold text-gray-600 tracking-wide'>PRODUCT DETAILS</div>
-                    <div className='w-[80%] text-justify'>
+                <div className='flex lg:flex-row xl:flex-row flex-col py-5 gap-x-5'>
+                    <div className='lg:flex-2 xl:flex-2 text-sm lg:text-lg xl:text-lg font-bold text-gray-600 tracking-wide'>PRODUCT DETAILS</div>
+                    <div className='lg:flex-8 xl:flex-8 text-justify'>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
                 </div>
             </div>
