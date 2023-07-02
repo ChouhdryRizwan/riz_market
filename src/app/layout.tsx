@@ -6,7 +6,7 @@ import Footer from "../../components/section/Footer";
 
 export const metadata = {
   title: "Hua-X-Sam",
-  description: "Live for People",
+  description: "Live the Brands",
 };
 
 export default function RootLayout({
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="px-20">
+      <body className="lg:px-20 xl:px-20 px-10">
         <CartProvider>
           <Toaster
             position="top-center"

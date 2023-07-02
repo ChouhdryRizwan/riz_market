@@ -30,9 +30,7 @@ const Hero = () => {
 
         </div>
         <div className="flex-1">
-          <div >
-            <Image className="sm:h-40 sm:w-60 md:h-44 md:w-72" src={"/huawei-mate-x2-banner.jpeg"} alt="Samsung-Logo" width={700} height={700} />
-          </div>
+            <Image className="lg:object-fill lg:h-96 lg:w-auto sm:h-40 sm:w-60 md:h-44 md:w-72" src={"/huawei-mate-x2-banner.jpeg"} alt="Huawei-banner" width={300} height={300} />
         </div>
       </div>
     </>

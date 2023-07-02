@@ -45,7 +45,7 @@ export default function HomeProducts() {
                                     height={300}
                                     src={urlForImage(data.prod_image).url()}
                                     alt='Product Image'
-                                    className='max-h-[250px] h-28 w-full object-contain object-center group-hover:opacity-75'
+                                    className='max-h-[250px] h-28 lg:h-full xl:h-full w-full object-contain object-center group-hover:opacity-75'
                                 />
                             </div>
 

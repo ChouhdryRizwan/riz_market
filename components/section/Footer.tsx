@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <>
             <div className="mt-14 border-t-[1px] border-gray-800 py-10">
-                <div className="flex lg:flex-row flex-col gap-x-4">
+                <div className="flex lg:flex-row flex-col gap-x-20">
                     <div className="flex-4">
                         <div className="justify-center items-center">
                             <Image className="h-[30%]" src={"/HuaXsam.png"} alt="Website Logo" width={200} height={200} />
@@ -16,7 +16,7 @@ export default function Footer() {
                             <div>.</div>
                         </div>
                     </div>
-                    <div className="flex-2">
+                    <div className="flex-2 ">
                         <span className="font-bold text-2xl text-gray-400">Company</span>
                         <ul className="font-lg text-gray-500 space-y-2 mt-3">
                             <li className="cursor-pointer">About Us</li>
@@ -25,7 +25,7 @@ export default function Footer() {
                             <li className="cursor-pointer">Terms of Use</li>
                         </ul>
                     </div>
-                    <div className="flex-2 mt-5 lg:mt-0 xl:mt-0">
+                    <div className="flex-2 mt-5 lg:mt-0 xl:mt-0 ">
                         <span className="font-bold text-2xl text-gray-400">Support</span>
                         <ul className="font-lg text-gray-500 space-y-2 mt-3">
                             <li className="cursor-pointer">Support Center</li>
@@ -33,7 +33,7 @@ export default function Footer() {
                             <li className="cursor-pointer">Customer Support</li>
                         </ul>
                     </div>
-                    <div className="flex-2 mt-5 lg:mt-0 xl:mt-0">
+                    <div className="flex-2 mt-5 lg:mt-0 xl:mt-0 ">
                         <span className="font-bold text-2xl text-gray-400">Contact</span>
                         <ul className="font-lg text-gray-500 space-y-2 mt-3">
                             <li className="cursor-pointer">WhatsApp</li>
