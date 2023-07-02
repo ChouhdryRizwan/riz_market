@@ -21,13 +21,15 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between items-center py-3 relative">
+      <Link href="/">
       <Image src={HuaXsam} alt="Website-Logo" className="w-40"></Image>
+      </Link>
         <ul className={`flex flex-col gap-y-2 ${isMobileMenuOpen ? 'block' : 'hidden'} sm:flex sm:flex-row sm:gap-x-10 sm:gap-y-0 absolute top-20 lg:top-0 xl:top-0 z-50 w-[100%] bg-white lg:relative xl:relative lg:w-auto xl:w-auto items-center`}>
         <li className="">
-          <div className={`p-2 w-10 rounded-full bg-gray-300 lg:hidden xl:hidden`}>
+          <div className={`p-2 w-fit relative rounded-full bg-gray-300 lg:hidden xl:hidden`}>
             <Link href="./cart">
               <ShoppingCart className="relative" />
-              <span className="text-sm font-semibold absolute -top-3 right-24 h-5 w-5 text-center rounded-full bg-[#f02d34] text-white">
+              <span className="text-sm font-semibold absolute -top-3 right-0 h-5 w-5 text-center rounded-full bg-[#f02d34] text-white">
                 {cartItems.length}
               </span>
             </Link>
