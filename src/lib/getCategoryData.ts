@@ -2,7 +2,7 @@ import { client } from "@/lib/sanityclient";
 
 export const getCategoryData = async (category: string) => {
   let query;
-  query = `*[_type == "product" && prod_cat_id->cat_name == "${category}"]{
+  query = `*[_type == "product" && prod_cat_id->cat_name == "${category}"] | order(_createdAt desc){
     _id,
     product_name,
     prod_desc,

@@ -14,7 +14,7 @@ export const getProductData = async (_id?: string) => {
     prod_image_gallery
   }`;
   } else {
-    query = `*[_type == "product"]{
+    query = `*[_type == "product"] | order(_createdAt desc){
         _id,
         product_name,
         prod_desc,

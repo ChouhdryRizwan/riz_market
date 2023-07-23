@@ -2,7 +2,7 @@ import { client } from "@/lib/sanityclient";
 
 export const getProductDataHome = async () => {
   let query;
-    query = `*[_type == "product"]{
+    query = `*[_type == "product"] | order(_createdAt desc) [0..3]{
     _id,
     product_name,
     prod_desc,

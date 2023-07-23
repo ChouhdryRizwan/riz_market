@@ -1,13 +1,12 @@
 'use client'
-
 import { useCart } from "@/lib/CartContext";
 import { useEffect } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 export default function CheckoutSuccess() {
     const router = useRouter();
-    const { cartItems,clearCart } = useCart();
-
+    const { cartItems, clearCart } = useCart();
+    
     const createCheckOutSession = async () => {
         try {
             const response = await fetch("/api/order/", {
@@ -16,23 +15,21 @@ export default function CheckoutSuccess() {
                 cache: "no-cache",
                 body: JSON.stringify(cartItems),
             });
-            // console.log(response);
+            // console.log("Response:", response);
         } catch (error) {
-            console.log(error);
-
+            console.log("Error:", error);
         }
-
     };
+
     useEffect(() => {
         createCheckOutSession();
         clearCart();
-        setTimeout(()=>{
-            router.push('/')
-        },2000)
+        setTimeout(() => {
+            router.push('/');
+        }, 2000);
     }, []);
 
-
     return (
-        <div>Checkout Sucessfully</div>
-    )
+        <div>Checkout Successfully</div>
+    );
 }

@@ -18,7 +18,6 @@ const stripePromise = loadStripe(publishableKey);
 
 export default function CartPage() {
     const { cartItems, removeFromCart, addToCart, ReducefromCart } = useCart();
-
     const prodTotalPrice = () => {
         let totalPrice: number = 0;
         cartItems.map(item => (
