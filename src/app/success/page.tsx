@@ -1,35 +1,25 @@
-'use client'
+"use client";
 import { useCart } from "@/lib/CartContext";
 import { useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function CheckoutSuccess() {
-    const router = useRouter();
-    const { cartItems, clearCart } = useCart();
-    
-    const createCheckOutSession = async () => {
-        try {
-            const response = await fetch("/api/order/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                cache: "no-cache",
-                body: JSON.stringify(cartItems),
-            });
-            // console.log("Response:", response);
-        } catch (error) {
-            console.log("Error:", error);
-        }
-    };
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { cartItems, clearCart } = useCart();
+  const success = searchParams.get("success");
 
-    useEffect(() => {
-        createCheckOutSession();
-        clearCart();
-        setTimeout(() => {
-            router.push('/');
-        }, 2000);
-    }, []);
+  if (!success) {
+    router.push("/");
+  } else {
+    clearCart();
+  }
 
-    return (
-        <div>Checkout Successfully</div>
-    );
+  useEffect(() => {
+    setTimeout(() => {
+      router.push("/");
+    }, 2000);
+  }, []);
+
+  return <div>Checkout Successfully</div>;
 }

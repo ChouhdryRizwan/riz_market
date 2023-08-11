@@ -9,7 +9,6 @@ export default function AddtoCart({ product }: any) {
     const { addToCart,clearCart } = useCart();
 
     const handleAddToCart = (e: any) => {
-        console.log("Rizwan");
         e.stopPropagation();
         addToCart(product);
         toast.success("Item added to the cart.");

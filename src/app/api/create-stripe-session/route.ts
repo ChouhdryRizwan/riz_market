@@ -28,13 +28,16 @@ export async function POST(request: NextRequest) {
                 name: item.product.product_name,
                 description: item.product.prod_desc,
                 images: [urlForImage(item.product.prod_image).url()],
+                metadata: {
+                  productId: item.product._id,
+                }
               },
               unit_amount: item.product.prod_price * 100,
             },
             quantity: item.quantity,
           };
         }),
-        success_url: `${request.headers.get("origin")}/success`,
+        success_url: `${request.headers.get("origin")}/success?success=true`,
         cancel_url: `${request.headers.get("origin")}/?canceled=true`,
       });
       return NextResponse.json({ session });
